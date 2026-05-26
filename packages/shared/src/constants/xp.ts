@@ -11,5 +11,3 @@ export const XP_EVENTS = {
 export type XpEventType = keyof typeof XP_EVENTS;
 
 export const MIN_WORKOUT_DURATION_SECONDS = 15 * 60;
-
-export const LEADERBOARD_MIN_MEMBERS = 5;

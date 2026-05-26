@@ -1,5 +1,5 @@
 import type { AvatarConfig } from './avatar';
-import type { AgeBand, ExperienceLevel, Goal, LeaderboardPrivacy } from './user';
+import type { AgeBand, ExperienceLevel, Goal, LeaderboardVisibility } from './user';
 
 export type BoardType = 'progress' | 'consistency' | 'performance';
 
@@ -9,12 +9,13 @@ export type BoardPeriod = 'weekly' | 'monthly' | 'all_time';
 
 export interface LeaderboardEntry {
   rank: number;
-  userId: string;
+  profileId: string;
   displayName: string;
   avatarConfig: AvatarConfig;
   score: number;
-  delta: number;
-  privacyMode: LeaderboardPrivacy;
+  scoreDelta: number;
+  /** Privacy mode at time of snapshot — 'private' entries are never included */
+  visibilityMode: Exclude<LeaderboardVisibility, 'private'>;
 }
 
 export interface LeaderboardSnapshot {
@@ -28,4 +29,12 @@ export interface LeaderboardSnapshot {
   period: BoardPeriod;
   entries: LeaderboardEntry[];
   computedAt: string;
+}
+
+export interface LeaderboardFilters {
+  boardType: BoardType;
+  period: BoardPeriod;
+  goalFilter?: Goal;
+  ageBandFilter?: AgeBand;
+  expFilter?: ExperienceLevel;
 }

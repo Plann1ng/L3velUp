@@ -16,7 +16,8 @@ export type ExperienceLevel = 'beginner' | 'intermediate' | 'advanced';
 
 export type UserRole = 'gym_owner' | 'gym_staff' | 'member';
 
-export type LeaderboardPrivacy = 'public' | 'gym_visible' | 'anonymous' | 'private';
+/** Controls how a member appears on leaderboards. Matches DB enum. */
+export type LeaderboardVisibility = 'public_name' | 'nickname' | 'private';
 
 export interface Profile {
   id: string;
@@ -32,8 +33,36 @@ export interface Profile {
   streakCurrent: number;
   streakBest: number;
   lastWorkoutDate: string | null;
-  leaderboardPrivacy: LeaderboardPrivacy;
+  leaderboardVisibility: LeaderboardVisibility;
+  cityLeaderboardOptIn: boolean;
+  countryLeaderboardOptIn: boolean;
   onboardingComplete: boolean;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
+}
+
+/** One entry in the history of a member's goal choices. */
+export interface MemberGoal {
+  id: string;
+  profileId: string;
+  goal: Goal;
+  isCurrent: boolean;
+  startedAt: string;
+  endedAt: string | null;
+  createdAt: string;
+}
+
+/** Stored once at onboarding; drives the progress leaderboard computation. */
+export interface BaselineMetrics {
+  id: string;
+  profileId: string;
+  recordedAt: string;
+  bodyWeightKg: number | null;
+  bench1RMkg: number | null;
+  squat1RMkg: number | null;
+  deadlift1RMkg: number | null;
+  run5kSeconds: number | null;
+  pushupsMax: number | null;
+  extraMetrics: Record<string, number>;
 }

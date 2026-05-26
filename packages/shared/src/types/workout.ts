@@ -23,7 +23,7 @@ export interface Exercise {
 
 export interface WorkoutSession {
   id: string;
-  userId: string;
+  profileId: string;
   gymId: string;
   programId: string | null;
   programDayId: string | null;
